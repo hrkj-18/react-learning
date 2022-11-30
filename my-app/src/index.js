@@ -6,33 +6,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-process.env.NODE_ENV === "dev" && Sentry.init({
+const {REACT_APP_MYENV} = process.env;
+
+Sentry.init({
   dsn: "https://0649083cd7764b049472847bc3d65689@o4504246743138304.ingest.sentry.io/4504246744121344",
   integrations: [new BrowserTracing()],
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
-
-process.env.NODE_ENV === "uat" && Sentry.init({
-  dsn: "https://0649083cd7764b049472847bc3d65689@o4504246743138304.ingest.sentry.io/4504246744121344",
-  integrations: [new BrowserTracing()],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 1.0,
-});
-
-process.env.NODE_ENV === "production" && Sentry.init({
-  dsn: "https://0649083cd7764b049472847bc3d65689@o4504246743138304.ingest.sentry.io/4504246744121344",
-  integrations: [new BrowserTracing()],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
+  environment: {REACT_APP_MYENV},
   tracesSampleRate: 1.0,
 });
 

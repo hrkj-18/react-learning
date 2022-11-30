@@ -21,7 +21,9 @@ export default function Main() {
                 }>
                 Break the world for Sentry
             </button>
-
+            
+            <p>This is {process.env.NODE_ENV} environment.</p>
+            <p>This is {process.env.REACT_APP_MYENV} environment.</p>
         </main>
     )
 }
