@@ -8,6 +8,7 @@ Hint: use the Figma file for the most accurate peek at the design
 import React from "react"
 import logo from '../logo.svg';
 
+
 export default function Navbar() {
     return (
         <nav>

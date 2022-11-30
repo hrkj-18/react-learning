@@ -11,6 +11,17 @@ export default function Main() {
                 <li>Is maintained by Facebook</li>
                 <li>Powers thousands of enterprise apps, including mobile apps</li>
             </ul>
+
+            <button 
+                type="button" 
+                onClick={
+                    () => {
+                        throw Error("Oops, Something has gone wrong");
+                    }
+                }>
+                Break the world for Sentry
+            </button>
+
         </main>
     )
 }
