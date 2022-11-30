@@ -5,26 +5,25 @@ import { BrowserTracing } from "@sentry/tracing";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { debounce } from "lodash";
+import {appConfig, stage} from "./config";
 
-const {REACT_APP_MYENV} = process.env;
-
-Sentry.init({
-  dsn: "https://0649083cd7764b049472847bc3d65689@o4504246743138304.ingest.sentry.io/4504246744121344",
-  beforeSend(event, hint) {
-    // Check if it is an exception, and if so, show the report dialog
-    if (event.exception) {
-      Sentry.showReportDialog({ eventId: event.event_id });
-    }
-    return event;
+if (appConfig.sentryDsn) {
+  const userFeedbackDialog = debounce( eventId => {Sentry.showReportDialog({eventId: eventId})}, 3000);
+  Sentry.init({
+    dsn: appConfig.sentryDsn,
+    environment: stage,
+    beforeSend(event) {
+      // Check if it is an exception, and if so, show the report dialog
+      if (event.exception) {
+          userFeedbackDialog(event.event_id);
+      }
+      return event;
   },
-  integrations: [new BrowserTracing()],
-
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  environment: {REACT_APP_MYENV},
-  tracesSampleRate: 1.0,
-});
+    integrations: [new BrowserTracing()],
+    tracesSampleRate: 1.0,
+  });
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
